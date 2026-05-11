@@ -36,24 +36,28 @@ export const useDeviceStore = create<DeviceState>((set, get) => ({
     const device = devices.find((d) => d.id === id);
     if (!device) return;
 
-    const currentState = device.state?.on ?? false;
+    const isScene = device.type === 'scene';
+    const currentState = isScene ? (device.state?.active ?? false) : (device.state?.on ?? false);
     const newState = !currentState;
+    
+    const stateUpdate = isScene ? { active: newState } : { on: newState };
 
     // 1. Optimistic Update
     set({
       devices: devices.map((d) =>
-        d.id === id ? { ...d, state: { ...d.state, on: newState } } : d
+        d.id === id ? { ...d, state: { ...d.state, ...stateUpdate } } : d
       ),
     });
 
     // 2. API Call
     try {
-      await devicesApi.updateState(id, { on: newState });
+      await devicesApi.updateState(id, stateUpdate);
     } catch (error) {
       // 3. Revert on failure
+      const revertState = isScene ? { active: currentState } : { on: currentState };
       set({
         devices: devices.map((d) =>
-          d.id === id ? { ...d, state: { ...d.state, on: currentState } } : d
+          d.id === id ? { ...d, state: { ...d.state, ...revertState } } : d
         ),
         error: `Failed to toggle device: ${(error as Error).message}`,
       });

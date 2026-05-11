@@ -27,12 +27,14 @@ export function DeviceGrid() {
     return <ErrorState title="Connection Error" message={error} onRetry={fetchDevices} />;
   }
 
-  if (devices.length === 0) {
+  const physicalDevices = devices.filter((d) => d.type !== 'scene');
+
+  if (physicalDevices.length === 0) {
     return <EmptyState icon={<ServerOff className="w-10 h-10" />} message="No devices found on the network." />;
   }
 
   // Group by location for a better dashboard feel
-  const grouped = devices.reduce((acc, device) => {
+  const grouped = physicalDevices.reduce((acc, device) => {
     const loc = device.location || 'Unassigned';
     if (!acc[loc]) acc[loc] = [];
     acc[loc].push(device);

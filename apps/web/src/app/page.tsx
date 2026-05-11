@@ -1,4 +1,5 @@
 import { DeviceGrid } from "@/components/devices/DeviceGrid";
+import { ModeGrid } from "@/components/devices/ModeGrid";
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted mt-2">Welcome home. Here is the status of your devices.</p>
       </div>
+      <ModeGrid />
       <DeviceGrid />
     </div>
   );
