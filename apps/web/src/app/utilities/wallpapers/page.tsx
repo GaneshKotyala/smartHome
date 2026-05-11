@@ -1,27 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
+import { useThemeStore, type Theme } from "@/store/themeStore";
 
-const THEMES = [
-  { id: "dark-blue",   name: "Dark Blue",   preview: "from-blue-950 to-blue-900" },
-  { id: "dark-purple", name: "Dark Purple", preview: "from-purple-950 to-purple-900" },
-  { id: "dark-zinc",   name: "Zinc Dark",   preview: "from-zinc-950 to-zinc-800" },
-  { id: "dark-teal",   name: "Teal Night",  preview: "from-teal-950 to-teal-900" },
-  { id: "dark-rose",   name: "Rose Dark",   preview: "from-rose-950 to-rose-900" },
-  { id: "dark-amber",  name: "Amber Dusk",  preview: "from-amber-950 to-amber-900" },
+const THEMES: { id: Theme; name: string; preview: string }[] = [
+  { id: "theme-dark-blue",   name: "Dark Blue",   preview: "from-blue-950 to-blue-900" },
+  { id: "theme-dark-purple", name: "Dark Purple", preview: "from-purple-950 to-purple-900" },
+  { id: "theme-dark-zinc",   name: "Zinc Dark",   preview: "from-zinc-950 to-zinc-800" },
+  { id: "theme-dark-teal",   name: "Teal Night",  preview: "from-teal-950 to-teal-900" },
+  { id: "theme-dark-rose",   name: "Rose Dark",   preview: "from-rose-950 to-rose-900" },
+  { id: "theme-dark-amber",  name: "Amber Dusk",  preview: "from-amber-950 to-amber-900" },
 ];
 
 export default function WallpapersPage() {
-  const [selected, setSelected] = useState("dark-zinc");
+  const { theme: selected, setTheme, initTheme } = useThemeStore();
+
+  useEffect(() => {
+    initTheme();
+  }, [initTheme]);
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Themes</h1>
         <p className="text-muted mt-2">
-          Choose a dashboard theme. Full dynamic theming coming in a future phase.
+          Choose a dashboard theme. Changes are applied instantly.
         </p>
       </div>
 
@@ -29,7 +34,7 @@ export default function WallpapersPage() {
         {THEMES.map((theme) => (
           <button
             key={theme.id}
-            onClick={() => setSelected(theme.id)}
+            onClick={() => setTheme(theme.id)}
             className={cn(
               "relative rounded-2xl overflow-hidden border-2 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
               selected === theme.id ? "border-primary shadow-lg shadow-primary/20" : "border-border hover:border-border/80",
@@ -46,10 +51,6 @@ export default function WallpapersPage() {
             )}
           </button>
         ))}
-      </div>
-
-      <div className="glass-panel rounded-2xl p-4 text-sm text-muted">
-        🚧 Dynamic theme switching will be implemented in a future phase. Currently showing a preview of planned themes.
       </div>
     </div>
   );

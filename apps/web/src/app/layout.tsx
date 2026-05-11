@@ -18,7 +18,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark theme-dark-zinc" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var theme = localStorage.getItem('gh-theme');
+                if (theme) {
+                  document.documentElement.classList.add(theme);
+                  if (theme !== 'theme-dark-zinc') {
+                    document.documentElement.classList.remove('theme-dark-zinc');
+                  }
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body suppressHydrationWarning className={`${inter.className} bg-background text-foreground flex h-screen overflow-hidden`}>
         {/* Desktop Sidebar */}
         <div className="hidden md:block">

@@ -1,19 +1,95 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #09090b;
-  --color-foreground: #fafafa;
-  
-  --color-card: #18181b;
-  --color-card-hover: #27272a;
-  
-  --color-primary: #3b82f6;
-  --color-primary-glow: rgba(59, 130, 246, 0.5);
-  
-  --color-success: #22c55e;
-  --color-muted: #a1a1aa;
-  
-  --color-border: #27272a;
+  --color-background: var(--app-background);
+  --color-foreground: var(--app-foreground);
+  --color-card: var(--app-card);
+  --color-card-hover: var(--app-card-hover);
+  --color-primary: var(--app-primary);
+  --color-primary-glow: var(--app-primary-glow);
+  --color-success: var(--app-success);
+  --color-muted: var(--app-muted);
+  --color-border: var(--app-border);
+}
+
+@layer base {
+  :root, .theme-dark-zinc {
+    --app-background: #000000; /* OLED Black */
+    --app-foreground: #fafafa;
+    --app-card: #18181b;
+    --app-card-hover: #27272a;
+    --app-primary: #3b82f6; /* Blue */
+    --app-primary-glow: rgba(59, 130, 246, 0.5);
+    --app-success: #22c55e;
+    --app-muted: #a1a1aa;
+    --app-border: #27272a;
+    --app-glass: rgba(24, 24, 27, 0.6);
+  }
+
+  .theme-dark-blue {
+    --app-background: #020617; /* Very Dark Blue */
+    --app-foreground: #f8fafc;
+    --app-card: #0f172a;
+    --app-card-hover: #1e293b;
+    --app-primary: #3b82f6; /* Blue */
+    --app-primary-glow: rgba(59, 130, 246, 0.5);
+    --app-success: #10b981;
+    --app-muted: #94a3b8;
+    --app-border: #1e293b;
+    --app-glass: rgba(15, 23, 42, 0.6);
+  }
+
+  .theme-dark-purple {
+    --app-background: #170a1c; /* Very Dark Purple */
+    --app-foreground: #faf5ff;
+    --app-card: #2e103c;
+    --app-card-hover: #441858;
+    --app-primary: #a855f7; /* Purple */
+    --app-primary-glow: rgba(168, 85, 247, 0.5);
+    --app-success: #22c55e;
+    --app-muted: #c084fc;
+    --app-border: #441858;
+    --app-glass: rgba(46, 16, 60, 0.6);
+  }
+
+  .theme-dark-teal {
+    --app-background: #041414; /* Very Dark Teal */
+    --app-foreground: #f0fdfa;
+    --app-card: #0d2b2b;
+    --app-card-hover: #144040;
+    --app-primary: #14b8a6; /* Teal */
+    --app-primary-glow: rgba(20, 184, 166, 0.5);
+    --app-success: #22c55e;
+    --app-muted: #5eead4;
+    --app-border: #144040;
+    --app-glass: rgba(13, 43, 43, 0.6);
+  }
+
+  .theme-dark-rose {
+    --app-background: #1c050a; /* Very Dark Rose */
+    --app-foreground: #fff1f2;
+    --app-card: #3b0a15;
+    --app-card-hover: #590f20;
+    --app-primary: #f43f5e; /* Rose */
+    --app-primary-glow: rgba(244, 63, 94, 0.5);
+    --app-success: #22c55e;
+    --app-muted: #fda4af;
+    --app-border: #590f20;
+    --app-glass: rgba(59, 10, 21, 0.6);
+  }
+
+  .theme-dark-amber {
+    --app-background: #000000; /* OLED Black */
+    --app-foreground: #fffbeb;
+    --app-card: #1f1400;
+    --app-card-hover: #332000;
+    --app-primary: #f59e0b; /* Amber */
+    --app-primary-glow: rgba(245, 158, 11, 0.5);
+    --app-success: #22c55e;
+    --app-muted: #fcd34d;
+    --app-border: #332000;
+    --app-glass: rgba(31, 20, 0, 0.6);
+  }
 }
 
 @layer base {
@@ -36,7 +112,7 @@
 
 @layer utilities {
   .glass-panel {
-    background: rgba(24, 24, 27, 0.6);
+    background: var(--app-glass);
     backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
   }
