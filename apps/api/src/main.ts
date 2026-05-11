@@ -11,7 +11,7 @@ async function bootstrap() {
 
   // ─── CORS (local network access — no auth in Phase 1) ─────────────────────
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: true, // Dynamically allows the requesting origin
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     credentials: true,
   });

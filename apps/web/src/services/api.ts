@@ -1,6 +1,7 @@
 import type { Device } from '@ganesh-home-hub/shared-types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+// We now use the Next.js rewrite proxy. The browser hits Port 3000, and Next.js forwards it to 4000 internally.
+const API_BASE_URL = '/api/v1';
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -24,23 +25,37 @@ async function fetchClient<T>(endpoint: string, options: RequestInit = {}): Prom
     headers,
   };
 
-  const response = await fetch(url, config);
+  // Add 5 second timeout so it doesn't hang forever
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+  config.signal = controller.signal;
 
-  if (!response.ok) {
-    let errorMessage = 'An error occurred during the request.';
-    try {
-      const errorData = await response.json();
-      errorMessage = errorData.message || errorMessage;
-    } catch (e) {
-      // Ignore if not JSON
+  try {
+    const response = await fetch(url, config);
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      let errorMessage = 'An error occurred during the request.';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.message || errorMessage;
+      } catch (e) {
+        // Ignore if not JSON
+      }
+      throw new ApiError(response.status, errorMessage);
     }
-    throw new ApiError(response.status, errorMessage);
+
+    // Handle empty responses
+    if (response.status === 204) return {} as T;
+
+    return response.json();
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if ((error as Error).name === 'AbortError') {
+      throw new Error('Request timed out. The server is unreachable.');
+    }
+    throw error;
   }
-
-  // Handle empty responses
-  if (response.status === 204) return {} as T;
-
-  return response.json();
 }
 
 /**
