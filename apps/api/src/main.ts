@@ -39,9 +39,9 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   const port = process.env.PORT || 4000;
-  await app.listen(port);
-  console.log(`🏠 Ganesh Home Hub API running on http://localhost:${port}/api/v1`);
-  console.log(`📚 Swagger docs at http://localhost:${port}/api/docs`);
+  await app.listen(port, '0.0.0.0');
+  console.log(`🏠 Ganesh Home Hub API running on http://0.0.0.0:${port}/api/v1`);
+  console.log(`📚 Swagger docs at http://0.0.0.0:${port}/api/docs`);
 }
 
 bootstrap();
