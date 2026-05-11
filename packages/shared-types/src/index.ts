@@ -49,6 +49,8 @@ export interface RoutineAction {
 export interface Routine {
   id: string;
   name: string;
+  description?: string;
+  icon?: string;
   trigger: RoutineTrigger;
   actions: RoutineAction[];
   isActive: boolean;

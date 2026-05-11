@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RoutineEntity } from './routines.entity';
+import { RoutinesController } from './routines.controller';
+import { RoutinesService } from './routines.service';
+import { DevicesModule } from '../devices/devices.module';
 
-// TODO Phase 2: Implement RoutinesModule
-// - RoutinesController (CRUD)
-// - RoutinesService
-// - RoutineEngineService (TriggerManager + ActionDispatcher)
-// - handlers/cron.handler.ts
-// - handlers/manual.handler.ts
-@Module({})
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([RoutineEntity]),
+    DevicesModule, // allows RoutinesService to call DevicesService
+  ],
+  controllers: [RoutinesController],
+  providers: [RoutinesService],
+  exports: [RoutinesService],
+})
 export class RoutinesModule {}

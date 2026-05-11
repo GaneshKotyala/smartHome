@@ -1,4 +1,4 @@
-import type { Device } from '@ganesh-home-hub/shared-types';
+import type { Device, Routine } from '@ganesh-home-hub/shared-types';
 
 // We now use the Next.js rewrite proxy. The browser hits Port 3000, and Next.js forwards it to 4000 internally.
 const API_BASE_URL = '/api/v1';
@@ -64,9 +64,17 @@ async function fetchClient<T>(endpoint: string, options: RequestInit = {}): Prom
 export const devicesApi = {
   getDevices: () => fetchClient<Device[]>('/devices'),
   getDevice: (id: string) => fetchClient<Device>(`/devices/${id}`),
-  updateState: (id: string, state: Record<string, any>) => 
+  updateState: (id: string, state: Record<string, any>) =>
     fetchClient<Device>(`/devices/${id}/state`, {
       method: 'PATCH',
       body: JSON.stringify({ state }),
+    }),
+};
+
+export const routinesApi = {
+  getRoutines: () => fetchClient<Routine[]>('/routines'),
+  execute: (id: string) =>
+    fetchClient<{ success: boolean; executedCount: number }>(`/routines/${id}/execute`, {
+      method: 'POST',
     }),
 };
