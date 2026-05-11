@@ -31,8 +31,8 @@ export default function WallpapersPage() {
             key={theme.id}
             onClick={() => setSelected(theme.id)}
             className={cn(
-              "relative rounded-2xl overflow-hidden border-2 transition-all active:scale-95",
-              selected === theme.id ? "border-primary shadow-lg shadow-primary/20" : "border-border",
+              "relative rounded-2xl overflow-hidden border-2 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+              selected === theme.id ? "border-primary shadow-lg shadow-primary/20" : "border-border hover:border-border/80",
             )}
           >
             <div className={cn("h-28 bg-gradient-to-br", theme.preview)} />

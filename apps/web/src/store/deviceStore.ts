@@ -16,7 +16,13 @@ export const useDeviceStore = create<DeviceState>((set, get) => ({
   error: null,
 
   fetchDevices: async () => {
-    set({ isLoading: true, error: null });
+    const isFirstLoad = get().devices.length === 0;
+    if (isFirstLoad) {
+      set({ isLoading: true, error: null });
+    } else {
+      set({ error: null }); // background refresh
+    }
+
     try {
       const devices = await devicesApi.getDevices();
       set({ devices, isLoading: false });

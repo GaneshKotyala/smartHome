@@ -3,7 +3,9 @@
 import { useEffect } from "react";
 import { useRoutineStore } from "@/store/routineStore";
 import { RoutineCard } from "@/components/routines/RoutineCard";
-import { Loader2, AlertCircle, Zap } from "lucide-react";
+import { Loader2, Zap } from "lucide-react";
+import { ErrorState } from "@/components/shared/ErrorState";
+import { EmptyState } from "@/components/shared/EmptyState";
 
 export default function RoutinesPage() {
   const { routines, isLoading, error, fetchRoutines } = useRoutineStore();
@@ -27,24 +29,11 @@ export default function RoutinesPage() {
       )}
 
       {error && (
-        <div className="flex flex-col items-center justify-center h-64 text-red-400 bg-red-500/10 rounded-2xl border border-red-500/20 p-6">
-          <AlertCircle className="w-10 h-10 mb-4" />
-          <h3 className="text-lg font-bold">Failed to load routines</h3>
-          <p className="text-sm opacity-80 mt-2 text-center">{error}</p>
-          <button
-            onClick={fetchRoutines}
-            className="mt-4 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg text-sm font-medium transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
+        <ErrorState title="Failed to load routines" message={error} onRetry={fetchRoutines} />
       )}
 
       {!isLoading && !error && routines.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-64 text-muted bg-card rounded-2xl border border-border p-6">
-          <Zap className="w-10 h-10 mb-4 opacity-30" />
-          <p>No routines found. Run the seed script to add defaults.</p>
-        </div>
+        <EmptyState icon={<Zap className="w-10 h-10" />} message="No routines found. Run the seed script to add defaults." />
       )}
 
       {!isLoading && !error && routines.length > 0 && (

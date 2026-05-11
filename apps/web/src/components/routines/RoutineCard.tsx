@@ -59,7 +59,7 @@ export function RoutineCard({ routine }: { routine: Routine }) {
         disabled={isExecuting}
         className={cn(
           "w-full flex items-center justify-center gap-2 py-3 rounded-xl border font-medium text-sm transition-all duration-300",
-          "active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/30",
+          "active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
           config.classes,
         )}
       >

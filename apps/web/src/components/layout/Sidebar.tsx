@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const MAIN_NAV = [
   { name: "Dashboard", href: "/",         icon: LayoutDashboard },
   { name: "Routines",  href: "/routines", icon: Zap },
-  { name: "Assistant", href: "#",         icon: Bot },
+  { name: "Assistant", href: "#",         icon: Bot, disabled: true },
 ];
 
 const UTILITY_NAV = [
@@ -20,14 +20,26 @@ const UTILITY_NAV = [
   { name: "Themes",     href: "/utilities/wallpapers", icon: Palette },
 ];
 
-function NavItem({ name, href, icon: Icon, active }: {
-  name: string; href: string; icon: any; active: boolean;
+function NavItem({ name, href, icon: Icon, active, disabled }: {
+  name: string; href: string; icon: any; active: boolean; disabled?: boolean;
 }) {
+  if (disabled) {
+    return (
+      <div className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm text-muted/50 cursor-not-allowed">
+        <div className="flex items-center gap-3">
+          <Icon className="w-5 h-5 shrink-0" />
+          {name}
+        </div>
+        <span className="text-[9px] uppercase tracking-wider font-bold bg-card-hover px-1.5 py-0.5 rounded-sm">Soon</span>
+      </div>
+    );
+  }
+
   return (
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors",
+        "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors focus-visible:ring-2 focus-visible:ring-primary/50 outline-none",
         active
           ? "bg-primary/10 text-primary font-medium"
           : "text-muted hover:text-foreground hover:bg-card-hover"

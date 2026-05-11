@@ -51,13 +51,14 @@ export function DeviceCard({ device }: { device: Device }) {
         <button 
           onClick={() => toggleDevice(device.id)}
           className={cn(
-            "w-12 h-12 rounded-full flex items-center justify-center transition-all",
-            "active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/50",
+            "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300",
+            "active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
             isOn 
               ? "bg-primary text-white shadow-lg" 
               : "bg-card-hover text-foreground border border-border hover:bg-border"
           )}
           aria-label={`Toggle ${device.name}`}
+          aria-pressed={isOn}
         >
           <Power className="w-5 h-5" />
         </button>

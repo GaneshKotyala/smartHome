@@ -3,7 +3,9 @@
 import { useEffect } from "react";
 import { useDeviceStore } from "@/store/deviceStore";
 import { DeviceCard } from "./DeviceCard";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, ServerOff } from "lucide-react";
+import { ErrorState } from "@/components/shared/ErrorState";
+import { EmptyState } from "@/components/shared/EmptyState";
 
 export function DeviceGrid() {
   const { devices, isLoading, error, fetchDevices } = useDeviceStore();
@@ -22,27 +24,11 @@ export function DeviceGrid() {
   }
 
   if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center h-64 text-red-400 bg-red-500/10 rounded-2xl border border-red-500/20 p-6">
-        <AlertCircle className="w-10 h-10 mb-4" />
-        <h3 className="text-lg font-bold">Connection Error</h3>
-        <p className="text-sm opacity-80 text-center max-w-md mt-2">{error}</p>
-        <button 
-          onClick={fetchDevices}
-          className="mt-6 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg transition-colors text-sm font-medium"
-        >
-          Try Again
-        </button>
-      </div>
-    );
+    return <ErrorState title="Connection Error" message={error} onRetry={fetchDevices} />;
   }
 
   if (devices.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-64 text-muted bg-card rounded-2xl border border-border p-6">
-        <p>No devices found on the network.</p>
-      </div>
-    );
+    return <EmptyState icon={<ServerOff className="w-10 h-10" />} message="No devices found on the network." />;
   }
 
   // Group by location for a better dashboard feel

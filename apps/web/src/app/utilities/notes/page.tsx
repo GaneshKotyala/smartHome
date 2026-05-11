@@ -39,7 +39,7 @@ export default function NotesPage() {
       </div>
 
       {/* Compose */}
-      <div className="glass-panel rounded-2xl p-4 flex flex-col gap-3">
+      <div className="glass-panel rounded-2xl p-4 flex flex-col gap-3 focus-within:ring-2 focus-within:ring-primary/50 transition-all">
         <textarea
           className="bg-transparent resize-none outline-none text-sm w-full min-h-[80px] placeholder:text-muted"
           placeholder="Write a note..."
@@ -50,7 +50,7 @@ export default function NotesPage() {
         <div className="flex justify-end">
           <button
             onClick={addNote}
-            className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg text-sm font-medium transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           >
             <Plus className="w-4 h-4" /> Add Note
           </button>
@@ -68,7 +68,11 @@ export default function NotesPage() {
               <p className="text-sm whitespace-pre-wrap">{note.content}</p>
               <p className="text-xs text-muted mt-2">{note.createdAt}</p>
             </div>
-            <button onClick={() => deleteNote(note.id)} className="text-muted hover:text-red-400 transition-colors flex-shrink-0">
+            <button 
+              onClick={() => deleteNote(note.id)} 
+              className="p-2 text-muted hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors flex-shrink-0 self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50"
+              aria-label="Delete note"
+            >
               <Trash2 className="w-4 h-4" />
             </button>
           </div>

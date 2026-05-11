@@ -64,7 +64,7 @@ export default function CalculatorPage() {
               key={btn}
               onClick={() => handleBtn(btn)}
               className={cn(
-                "aspect-square rounded-2xl text-lg font-medium flex items-center justify-center transition-all active:scale-95",
+                "aspect-square min-h-[48px] rounded-2xl text-lg font-medium flex items-center justify-center transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 btn === "=" && "bg-primary text-white shadow-lg shadow-primary/30",
                 ["÷","×","−","+"].includes(btn) && "bg-primary/20 text-primary",
                 ["C","±","%"].includes(btn) && "bg-card-hover text-muted",

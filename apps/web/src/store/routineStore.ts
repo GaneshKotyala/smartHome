@@ -21,7 +21,13 @@ export const useRoutineStore = create<RoutineState>((set, get) => ({
   executionStatus: {},
 
   fetchRoutines: async () => {
-    set({ isLoading: true, error: null });
+    const isFirstLoad = get().routines.length === 0;
+    if (isFirstLoad) {
+      set({ isLoading: true, error: null });
+    } else {
+      set({ error: null }); // background refresh
+    }
+
     try {
       const routines = await routinesApi.getRoutines();
       set({ routines, isLoading: false });
