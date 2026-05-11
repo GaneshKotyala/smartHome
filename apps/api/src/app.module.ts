@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DatabaseModule } from './database/database.module';
 import { DevicesModule } from './modules/devices/devices.module';
 import { RoutinesModule } from './modules/routines/routines.module';
 import { AssistantModule } from './modules/assistant/assistant.module';
@@ -10,8 +11,11 @@ import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
-    // Load .env globally
+    // Load .env globally — must be first
     ConfigModule.forRoot({ isGlobal: true }),
+
+    // Database — must be before feature modules
+    DatabaseModule,
 
     // Feature modules
     DevicesModule,
