@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} bg-background text-foreground flex h-screen overflow-hidden`}>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body suppressHydrationWarning className={`${inter.className} bg-background text-foreground flex h-screen overflow-hidden`}>
         {/* Desktop Sidebar */}
         <div className="hidden md:block">
           <Sidebar />
