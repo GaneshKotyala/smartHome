@@ -1,0 +1,25 @@
+# Development overrides — use with:
+# docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  web:
+    build:
+      target: development
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
+      - WATCHPACK_POLLING=true   # Required for hot reload on Windows Docker volumes
+    command: npm run dev
+
+  api:
+    build:
+      target: development
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev

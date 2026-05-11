@@ -1,0 +1,10 @@
+# Enforce LF line endings for all files (cross-platform: Windows dev → Ubuntu server)
+* text=auto eol=lf
+
+# Explicitly declare binary files to prevent corruption
+*.png binary
+*.jpg binary
+*.ico binary
+*.webp binary
+*.woff2 binary
+*.ttf binary
